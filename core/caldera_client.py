@@ -12,21 +12,21 @@ class CalderaClient:
         self.headers = {"KEY": api_key, "Content-Type": "application/json"}
 
     def test_connection(self):
-        """Prueba la conexión con el servidor Caldera"""
+        """Test the connection to the Caldera server"""
         try:
             response = requests.get(
                 f"{self.base_url}/api/v2/abilities", headers=self.headers, verify=False
             )
 
             if response.status_code == 200:
-                return True, "Conexión exitosa"
+                return True, "Connection seccessful"
             else:
                 return False, f"Error: {response.status_code} - {response.text}"
         except Exception as e:
-            return False, f"Error de conexión: {str(e)}"
+            return False, f"Connection error: {str(e)}"
 
     def get_abilities(self):
-        """Obtiene todas las habilidades disponibles en Caldera"""
+        """Gain all skills available in Caldera"""
         response = requests.get(
             f"{self.base_url}/api/v2/agents", headers=self.headers, verify=False
         )
@@ -36,7 +36,7 @@ class CalderaClient:
             return []
 
     def get_adversaries(self):
-        """Obtiene todos los perfiles de adversarios disponibles"""
+        """Gets all available adversary profiles"""
         response = requests.get(
             f"{self.base_url}/api/v2/adversaries", headers=self.headers, verify=False
         )
@@ -46,7 +46,7 @@ class CalderaClient:
             return []
 
     def get_agents(self):
-        """Obtiene todos los agentes conectados"""
+        """Get all connected agents"""
         response = requests.get(
             f"{self.base_url}/api/v2/agents", headers=self.headers, verify=False
         )
@@ -55,37 +55,78 @@ class CalderaClient:
 
     def deploy_agent(self):
         messages = [
-            "\n[!] La API de Caldera v5.3.0 no soporta la generación automática del agente Sandcat.",
-            "[*] Por favor, ve a la interfaz web de Caldera y genera el comando de despliegue manualmente:",
-            "    Caldera UI → Agents → Deploy → Selecciona plataforma y copia el comando generado.\n",
-            "[*] Pega ese comando en el sistema objetivo para instalar el agente.\n",
+            "\n[!] Caldera API does not support automatic.",
+            "[*] Please go to the Caldera web interface and generate the deployment command manually:",
+            "    Caldera UI → Agents → Deploy → Select platform and copy the generated command.\n",
+            "[*] Paste that commands on the target system to install the agent.\n",
         ]
 
         for message in messages:
             print(message)
 
+    def get_planners(self):
+        """Get all available planners"""
+        response = requests.get(
+            f"{self.base_url}/api/v2/planners", headers=self.headers, verify=False
+        )
+        if response.status_code == 200:
+            return response.json()
+        return []
+
+    def get_sources(self):
+        """Gets all available fact sources"""
+        response = requests.get(
+            f"{self.base_url}/api/v2/sources", headers=self.headers, verify=False
+        )
+        if response.status_code == 200:
+            return response.json()
+        return []
+
     def create_operation(self, name=None, adversary_id=None, agent_group="red"):
-        """Crea una nueva operación en Caldera"""
         if not name:
             name = f"Operation_{generate_random_string(8)}"
 
-        # Si no se proporciona un adversario, obtener el primero disponible
+        # Get full adversary
         if not adversary_id:
             adversaries = self.get_adversaries()
             if adversaries:
-                adversary_id = adversaries[0]["adversary_id"]
+                adversary = adversaries[0]
             else:
-                return None, "No hay adversarios disponibles"
+                return None, "There are no adversary available"
+        else:
+            adversary = next(
+                (
+                    a
+                    for a in self.get_adversaries()
+                    if a["adversary_id"] == adversary_id
+                ),
+                None,
+            )
+            if not adversary:
+                return None, f"Adversary with ID {adversary_id} not found"
+
+        # Obtener planner completo
+        planners = self.get_planners()
+        planner = next((p for p in planners if p["name"].lower() == "atomic"), None)
+        if not planner:
+            return None, "Planner 'atomic' not found"
+
+        # Obtener fuente (source) por defecto
+        sources = self.get_sources()
+        source = sources[0] if sources else {"id": "basic", "name": "basic"}
 
         data = {
             "name": name,
-            "adversary_id": adversary_id,
-            "source": "API",
-            "planner": "atomic",
+            "adversary": adversary,
+            "planner": planner,
+            "source": source,
             "state": "running",
             "autonomous": 1,
             "group": agent_group,
             "obfuscator": "plain-text",
+            "auto_close": True,
+            "visibility": 50,
+            "use_learning_parsers": True,
         }
 
         response = requests.post(
@@ -101,18 +142,18 @@ class CalderaClient:
             return None, f"Error: {response.status_code} - {response.text}"
 
     def get_operation_results(self, operation_id):
-        """Obtiene los resultados de una operación"""
+        """Gest the results of an operation"""
         response = requests.get(
-            f"{self.base_url}/api/v2/operations/{operation_id}/report",
+            f"{self.base_url}/api/v2/operations/{operation_id}",
             headers=self.headers,
             verify=False,
         )
+
         return response.json()
 
     def wait_for_operation_completion(
         self, operation_id, timeout=300, check_interval=10
     ):
-        """Espera a que una operación se complete"""
         start_time = time.time()
         while time.time() - start_time < timeout:
             response = requests.get(
@@ -131,13 +172,13 @@ class CalderaClient:
         return {"error": "Timeout waiting for operation completion"}
 
     def run_caldera_assessment(self, agent_group="red", adversary_name=None):
-        # 1. Verificar agentes disponibles
+        # 1. Check available agents
         agents = self.get_agents()
 
         if not agents:
-            return {"error": "No hay agentes disponibles para ejecutar la evaluación"}
+            return {"error": "There are no agents available to run the assessment."}
 
-        # 2. Seleccionar adversario
+        # 2. Select adversary
         adversary_id = None
         if adversary_name:
             adversaries = self.get_adversaries()
@@ -147,9 +188,9 @@ class CalderaClient:
                     break
 
             if not adversary_id:
-                return {"error": f"Adversario '{adversary_name}' no encontrado"}
+                return {"error": f"Adversary '{adversary_name}' not found"}
 
-        # 3. Crear y ejecutar operación
+        # 3. Create and execute operation
         operation, error = self.create_operation(
             name=f"Assessment_{generate_random_string(8)}",
             adversary_id=adversary_id,
@@ -159,11 +200,11 @@ class CalderaClient:
         if error:
             return {"error": error}
 
-        # 4. Esperar resultados
+        # 4. Wait for results
         operation_id = operation["id"]
         results = self.wait_for_operation_completion(operation_id)
 
-        # 5. Procesar y devolver resultados
+        # 5. Process and return results
         return {
             "operation_id": operation_id,
             "adversary": operation.get("adversary", {}).get("name", "Unknown"),

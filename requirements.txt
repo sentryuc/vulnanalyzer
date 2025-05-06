@@ -1,0 +1,5 @@
+argparse
+requests
+python-nmap
+python-dotenv
+beautifulsoup4
