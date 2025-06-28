@@ -152,6 +152,9 @@ pyrightconfig.json
 # Built Visual Studio Code Extensions
 *.vsix
 
+# Local Tools
+tools/
+
 # Local Testing
 testing
 
