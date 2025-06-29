@@ -11,8 +11,25 @@ services:
       - "8888:8888" # Puerto TCP (interfaz web)
     restart: unless-stopped
     networks:
-      - caldera-network
+      - security-network
+
+  openvas:
+    image: immauss/openvas:24.12.03
+    container_name: openvas
+    ports:
+      - "8080:9392" # Puerto web de OpenVAS
+    environment:
+      - PASSWORD=root
+    restart: unless-stopped
+    networks:
+      - security-network
+    volumes:
+      - openvas-data:/data
+
+volumes:
+  openvas-data:
+    driver: local
 
 networks:
-  caldera-network:
+  security-network:
     driver: bridge

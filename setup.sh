@@ -50,3 +50,6 @@ docker build --build-arg WIN_BUILD=true . -t caldera:server
 
 echo "Setup completed successfully!"
 echo "You can now run Caldera using: docker run -p 8888:8888 caldera:server"
+
+# Donwload image OpenVas
+docker pull immauss/openvas:24.12.03

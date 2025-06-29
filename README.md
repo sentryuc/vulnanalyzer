@@ -101,35 +101,20 @@ OUTPUT_DIR=./reports
 
 ### Obtener API Key de Caldera
 
-1. Accede a la interfaz web de Caldera
-2. Ve a la sección de configuración
-3. Genera una nueva API key
+1. Para ingresar a caldaera a traves del contenedor de docker
+
+```bash
+docker exec -it caldera-server /bin/bash
+```
+
+2. Obtener la credenciales de inicio ya que caldera configura una API y constraseña cada vez que inicia.
+
+```bash
+cat conf/local.yml
+```
+
+3. Usar la credencial de inicio dependiendo de lo que se desee trabajar `red` o `blue`
 4. Copia la key al archivo `.env`
-
-## 🎯 Uso
-
-### Ejecución Básica
-
-```bash
-# Activar el ambiente virtual
-source venv/bin/activate
-
-# Ejecutar el análisis
-python main.py
-```
-
-### Opciones de Configuración
-
-```bash
-# Ejecutar con configuración específica
-python main.py --config config.yaml
-
-# Ejecutar en modo verbose
-python main.py --verbose
-
-# Ejecutar solo escaneo de red
-python main.py --network-only
-```
 
 ## 📁 Estructura del Proyecto
 
@@ -147,16 +132,6 @@ vulnanalyzer/
 ├── README.md
 ├── requirements.txt
 └── setup.sh
-```
-
-## 🧪 Pruebas
-
-```bash
-# Ejecutar todas las pruebas
-python -m pytest tests/
-
-# Ejecutar pruebas con cobertura
-python -m pytest --cov=src tests/
 ```
 
 ## 📄 Licencia
