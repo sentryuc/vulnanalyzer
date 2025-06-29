@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  caldera:
+    image: caldera:server
+    container_name: caldera-server
+    ports:
+      - "7010:7010" # Puerto TCP
+      - "7011:7011/udp" # Puerto UDP
+      - "7012:7012" # Puerto TCP
+      - "8888:8888" # Puerto TCP (interfaz web)
+    restart: unless-stopped
+    networks:
+      - caldera-network
+
+networks:
+  caldera-network:
+    driver: bridge

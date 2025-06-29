@@ -12,7 +12,23 @@ from core.exploiter import Exploiter
 from config.settings import CALDERA_API_KEY, CALDERA_BASE_URL
 
 
+def banner():
+    print("""
+    ██╗   ██╗██╗   ██╗██╗     ███╗   ██╗ █████╗ ███╗   ██╗ █████╗ ██╗  ██╗   ██╗███████╗███████╗██████╗ 
+    ██║   ██║██║   ██║██║     ████╗  ██║██╔══██╗████╗  ██║██╔══██╗██║  ╚██╗ ██╔╝╚══███╔╝██╔════╝██╔══██╗
+    ██║   ██║██║   ██║██║     ██╔██╗ ██║███████║██╔██╗ ██║███████║██║   ╚████╔╝   ███╔╝ █████╗  ██████╔╝
+    ╚██╗ ██╔╝██║   ██║██║     ██║╚██╗██║██╔══██║██║╚██╗██║██╔══██║██║    ╚██╔╝   ███╔╝  ██╔══╝  ██╔══██╗
+     ╚████╔╝ ╚██████╔╝███████╗██║ ╚████║██║  ██║██║ ╚████║██║  ██║███████╗██║   ███████╗███████╗██║  ██║
+      ╚═══╝   ╚═════╝ ╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝╚═╝   ╚══════╝╚══════╝╚═╝  ╚═╝
+                                                                                       v1.0
+    """)
+    print("Vulnerability analysis and adversary emulation framework")
+    print("=" * 80)
+
+
 def main():
+    banner()
+
     parser = argparse.ArgumentParser(
         description="VulnAnalyzer - Vulnerability Analysis Framework"
     )
