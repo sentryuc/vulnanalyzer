@@ -8,6 +8,7 @@ from datetime import datetime
 from core.caldera_client import CalderaClient
 from core.scanner import VulnerabilityScanner
 from core.exploiter import Exploiter
+from core.discover import HostDiscoverer
 
 from config.settings import CALDERA_API_KEY, CALDERA_BASE_URL
 
@@ -46,6 +47,15 @@ def main():
         help="Scan type (default: full)",
     )
     scan_parser.add_argument("--output", "-o", help="Output file for results")
+
+    # Discover command
+    discover_parser = subparsers.add_parser(
+        "discover", help="Discover active hosts on the network"
+    )
+    discover_parser.add_argument(
+        "range", help="Network range to scan (e.g., 192.168.1.0/24)"
+    )
+    discover_parser.add_argument("--output", "-o", help="Output file for results")
 
     # Exploitation Command #2
     exploit_parser = subparsers.add_parser("exploit", help="Exploiting vulnerabilities")
@@ -91,6 +101,19 @@ def main():
             print(f"[+] Result saved in {args.output}")
         else:
             print(json.dumps(results, indent=4))
+
+    # Handle Discover Command
+    elif args.command == "discover":
+        print(f"[*] Discovering hosts on {args.range}")
+        discoverer = HostDiscoverer(args.range)
+        hosts = discoverer.discover_hosts()
+
+        if args.output:
+            with open(args.output, "w") as f:
+                json.dump({"active_hosts": hosts}, f, indent=4)
+            print(f"[+] Results saved in {args.output}")
+        else:
+            print(json.dumps({"active_hosts": hosts}, indent=4))
 
     # Manage exploitation command #2
     elif args.command == "exploit":
