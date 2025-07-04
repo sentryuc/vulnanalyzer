@@ -52,4 +52,5 @@ echo "Setup completed successfully!"
 echo "You can now run Caldera using: docker run -p 8888:8888 caldera:server"
 
 # Donwload image OpenVas
-docker pull immauss/openvas:24.12.03
+# docker pull immauss/openvas:24.12.03
+

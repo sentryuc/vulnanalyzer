@@ -12,19 +12,18 @@ services:
     restart: unless-stopped
     networks:
       - security-network
-
-  openvas:
-    image: immauss/openvas:24.12.03
-    container_name: openvas
-    ports:
-      - "8080:9392" # Puerto web de OpenVAS
-    environment:
-      - PASSWORD=root
-    restart: unless-stopped
-    networks:
-      - security-network
-    volumes:
-      - openvas-data:/data
+  # openvas:
+  #   image: immauss/openvas:24.12.03
+  #   container_name: openvas
+  #   ports:
+  #     - "8080:9392" # Puerto web de OpenVAS
+  #   environment:
+  #     - PASSWORD=root
+  #   restart: unless-stopped
+  #   networks:
+  #     - security-network
+  #   volumes:
+  #     - openvas-data:/data
 
 volumes:
   openvas-data:
