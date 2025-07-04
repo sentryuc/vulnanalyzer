@@ -154,6 +154,7 @@ pyrightconfig.json
 
 # Local Tools
 tools/
+GEMINI.md
 
 # Local Testing
 testing

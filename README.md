@@ -20,7 +20,7 @@ Framework VulnAnalyzer es una herramienta de análisis de vulnerabilidades que i
 
 ### Prerrequisitos
 
-- Python 3.8 o superior
+- Python 3.10 o superior
 - Nmap (para escaneos de red)
 - Acceso a servidor Caldera
 - Acceso a servidor OpenVAS
@@ -120,13 +120,14 @@ cat conf/local.yml
 
 ```
 vulnanalyzer/
+├── config/
 ├── core/
 ├── modules/
-├── config/
 ├── reports/
 ├── cli/
 ├── .env
 ├── .gitingnore
+├── .docker-compose.yml
 ├── LICENSE
 ├── main.py
 ├── README.md
@@ -156,4 +157,3 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 ---
 
 **Nota**: Este proyecto está en desarrollo activo. Las funcionalidades pueden cambiar sin previo aviso.
-
