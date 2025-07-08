@@ -5,13 +5,13 @@
 
 ## 📋 Description
 
-VulnAnalyzer Framework is a vulnerability analysis tool that integrates Caldera and OpenVAS to perform automated security assessments. It enables efficient identification and analysis of vulnerabilities in systems and networks.
+VulnAnalyzer Framework is a vulnerability analysis tool that integrates Caldera to perform automated security assessments. It enables efficient identification and analysis of vulnerabilities in systems and networks.
 
 ## ✨ Features
 
 🔍 Automated vulnerability analysis
 🔗 Integration with Caldera for security operations
-🛡️ Scanning with OpenVAS
+🛡️ Scanning with Nmap
 📊 Detailed report generation
 🐍 Developed in Python
 🔧 Flexible configuration using environment variables
@@ -23,7 +23,6 @@ VulnAnalyzer Framework is a vulnerability analysis tool that integrates Caldera 
 - Python 3.10 or higher
 - Nmap (for network scanning)
 - Access to a Caldera server
-- Access to an OpenVAS server
 
 
 ### Installation Steps
@@ -53,7 +52,7 @@ venv\Scripts\activate
 
 #### 3. Configure Tools and Install requirements.txt
 
-Run the setup script to prepare the Caldera and OpenVAS environment:
+Run the setup script to prepare the Caldera environment:
 
 ```bash
 chmod +x setup.sh
@@ -88,12 +87,6 @@ Create a `.env` file in the project root with the following variables:
 # Caldera Configuration
 CALDERA_BASE_URL=http://your-caldera-server:8888
 CALDERA_API_KEY=your-caldera-api-key
-
-# OpenVAS Configuration (optional)
-OPENVAS_HOST=your-openvas-server
-OPENVAS_PORT=9392
-OPENVAS_USERNAME=your-username
-OPENVAS_PASSWORD=your-password
 
 # General Configuration
 LOG_LEVEL=INFO
@@ -143,7 +136,6 @@ This project is licensed under the MIT License. See the `LICENSE` file for more 
 ## 🔗 Useful Links
 
 - [Caldera Documentation](https://caldera.readthedocs.io/)
-- [OpenVAS Documentation](https://www.openvas.org/documentation/)
 - [Nmap Guide](https://nmap.org/docs.html)
 
 
@@ -151,11 +143,11 @@ This project is licensed under the MIT License. See the `LICENSE` file for more 
 
 - ✅ Basic installation and configuration
 - ✅ Caldera integration
-- ✅ OpenVAS integration
+- ✅ Nmap integration
 - 🔄 Report generation
 - 🔄 Web interface
 - 🔄 REST API
 
 ---
 
-**Note**: Note: This project is under active development. Features may change without prior notice.
+**Note**: This project is under active development. Features may change without prior notice.
