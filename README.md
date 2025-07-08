@@ -3,65 +3,66 @@
 [![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-## 📋 Descripción
+## 📋 Description
 
-Framework VulnAnalyzer es una herramienta de análisis de vulnerabilidades que integra Caldera y OpenVAS para realizar evaluaciones de seguridad automatizadas. Permite identificar y analizar vulnerabilidades en sistemas y redes de manera eficiente.
+VulnAnalyzer Framework is a vulnerability analysis tool that integrates Caldera and OpenVAS to perform automated security assessments. It enables efficient identification and analysis of vulnerabilities in systems and networks.
 
-## ✨ Características
+## ✨ Features
 
-- 🔍 Análisis automatizado de vulnerabilidades
-- 🔗 Integración con Caldera para operaciones de seguridad
-- 🛡️ Escaneo con OpenVAS
-- 📊 Generación de reportes detallados
-- 🐍 Desarrollado en Python
-- 🔧 Configuración flexible mediante variables de entorno
+🔍 Automated vulnerability analysis
+🔗 Integration with Caldera for security operations
+🛡️ Scanning with OpenVAS
+📊 Detailed report generation
+🐍 Developed in Python
+🔧 Flexible configuration using environment variables
 
-## 🚀 Instalación
+## 🚀  Installation
 
-### Prerrequisitos
+### Prerequisites
 
-- Python 3.10 o superior
-- Nmap (para escaneos de red)
-- Acceso a servidor Caldera
-- Acceso a servidor OpenVAS
+- Python 3.10 or higher
+- Nmap (for network scanning)
+- Access to a Caldera server
+- Access to an OpenVAS server
 
-### Pasos de Instalación
 
-#### 1. Clonar el Repositorio
+### Installation Steps
+
+#### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/sentryuc/vulnanalyzer.git
 cd vulnanalyzer
 ```
 
-#### 2. Crear Ambiente Virtual
+#### 2. Create a Virtual Environment
 
-Es recomendable usar un ambiente virtual para trabajar en proyectos aislados que no afecten el ambiente principal del sistema.
+It is recommended to use a virtual environment to isolate project dependencies from the system environment.
 
 ```bash
-# Crear el ambiente virtual
+# Create the virtual environment
 python -m venv venv
 
-# Activar el ambiente virtual
-# En Linux/macOS:
+# Activate the virtual environment
+# On Linux/macOS:
 source venv/bin/activate
 
-# En Windows:
+# On Windows:
 venv\Scripts\activate
 ```
 
-#### 3. Configurar Herramientas e instalacion de requirements.txt
+#### 3. Configure Tools and Install requirements.txt
 
-Ejecuta el script de configuración para preparar el ambiente de Caldera y OpenVAS:
+Run the setup script to prepare the Caldera and OpenVAS environment:
 
 ```bash
 chmod +x setup.sh
 ./setup.sh
 ```
 
-#### 4. Instalar Nmap (si no está disponible)
+#### 4. Install Nmap (if not available)
 
-Si el programa se ejecuta desde un servidor que no tenga nmap instalado:
+If the tool is run from a server without Nmap installed:
 
 ```bash
 # Debian/Ubuntu
@@ -73,50 +74,50 @@ sudo dnf install nmap -y
 # Arch/Manjaro
 sudo pacman -S nmap
 
-# macOS (con Homebrew)
+# macOS (with Homebrew)
 brew install nmap
 ```
 
-## ⚙️ Configuración
+## ⚙️ Configuration
 
-### Variables de Entorno
+### Environment Variables
 
-Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
+Create a `.env` file in the project root with the following variables:
 
 ```bash
-# Configuración de Caldera
-CALDERA_BASE_URL=http://tu-servidor-caldera:8888
-CALDERA_API_KEY=tu-api-key-de-caldera
+# Caldera Configuration
+CALDERA_BASE_URL=http://your-caldera-server:8888
+CALDERA_API_KEY=your-caldera-api-key
 
-# Configuración de OpenVAS (opcional)
-OPENVAS_HOST=tu-servidor-openvas
+# OpenVAS Configuration (optional)
+OPENVAS_HOST=your-openvas-server
 OPENVAS_PORT=9392
-OPENVAS_USERNAME=tu-usuario
-OPENVAS_PASSWORD=tu-contraseña
+OPENVAS_USERNAME=your-username
+OPENVAS_PASSWORD=your-password
 
-# Configuración general
+# General Configuration
 LOG_LEVEL=INFO
 OUTPUT_DIR=./reports
 ```
 
-### Obtener API Key de Caldera
+### Obtaining the Caldera API Key
 
-1. Para ingresar a caldaera a traves del contenedor de docker
+1. To access Caldera through the Docker container:
 
 ```bash
 docker exec -it caldera-server /bin/bash
 ```
 
-2. Obtener la credenciales de inicio ya que caldera configura una API y constraseña cada vez que inicia.
+2. Retrieve the login credentials (Caldera generates a new API key and password at each startup):
 
 ```bash
 cat conf/local.yml
 ```
 
-3. Usar la credencial de inicio dependiendo de lo que se desee trabajar `red` o `blue`
-4. Copia la key al archivo `.env`
+3. Use the startup credentials depending on whether you want to work with the `red` or `blue` agent.
+4.Copy the API key into the `.env` file.
 
-## 📁 Estructura del Proyecto
+## 📁 Project Structure
 
 ```
 vulnanalyzer/
@@ -135,25 +136,26 @@ vulnanalyzer/
 └── setup.sh
 ```
 
-## 📄 Licencia
+## 📄 License
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+This project is licensed under the MIT License. See the `LICENSE` file for more details.
 
-## 🔗 Enlaces Útiles
+## 🔗 Useful Links
 
-- [Documentación de Caldera](https://caldera.readthedocs.io/)
-- [Documentación de OpenVAS](https://www.openvas.org/documentation/)
-- [Guía de Nmap](https://nmap.org/docs.html)
+- [Caldera Documentation](https://caldera.readthedocs.io/)
+- [OpenVAS Documentation](https://www.openvas.org/documentation/)
+- [Nmap Guide](https://nmap.org/docs.html)
 
-## 📊 Estado del Proyecto
 
-- ✅ Instalación y configuración básica
-- ✅ Integración con Caldera
-- ✅ Integración con OpenVAS
-- 🔄 Generación de reportes
-- 🔄 Interfaz web
-- 🔄 API REST
+## 📊 Project Status
+
+- ✅ Basic installation and configuration
+- ✅ Caldera integration
+- ✅ OpenVAS integration
+- 🔄 Report generation
+- 🔄 Web interface
+- 🔄 REST API
 
 ---
 
-**Nota**: Este proyecto está en desarrollo activo. Las funcionalidades pueden cambiar sin previo aviso.
+**Note**: Note: This project is under active development. Features may change without prior notice.
