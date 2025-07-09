@@ -1,25 +1,25 @@
-# Uso de VulnAnalyzer
+# Using VulnAnalyzer
 
-Esta guía explica cómo utilizar las funcionalidades principales de VulnAnalyzer.
+This guide explains how to use the main features of VulnAnalyzer.
 
-## 1. Descubrimiento de Anfitriones
+## 1. Host Discovery
 
-Antes de escanear vulnerabilidades, puedes descubrir qué anfitriones están activos en tu red.
+Before scanning for vulnerabilities, you can discover which hosts are active on your network.
 
-**Comando:**
+**Command:**
 
 ```bash
-python3 main.py discover <rango_de_red> [opciones]
+python3 main.py discover <network_range> [options]
 ```
 
-**Ejemplo:**
+**Example:**
 
 ```bash
 python3 main.py discover 192.168.1.0/24
 ```
 
-**Salida:**
-El comando mostrará una lista de las direcciones IP activas en formato JSON.
+**Output:**
+The command will display a list of active IP addresses in JSON format.
 
 ```json
 {
@@ -31,45 +31,44 @@ El comando mostrará una lista de las direcciones IP activas en formato JSON.
 }
 ```
 
-**Guardar la salida en un fichero:**
+**Save output to a file:**
 
 ```bash
 python3 main.py discover 192.168.1.0/24 -o discovered_hosts.json
 ```
 
-## 2. Escaneo de Vulnerabilidades
+## 2. Vulnerability Scanning
 
-Una vez que hayas identificado un objetivo, puedes escanearlo en busca de vulnerabilidades.
+Once you have identified a target, you can scan it for vulnerabilities.
 
-**Comando:**
+**Command:**
 
 ```bash
-python3 main.py scan <ip_o_dominio> [opciones]
+python3 main.py scan <ip_or_domain> [options]
 ```
 
-**Ejemplo:**
+**Example:**
 
 ```bash
 python3 main.py scan 192.168.1.10
 ```
 
-### Tipos de Escaneo
+### Scan Types
+You can specify the scan type using the `--type` option:
 
-Puedes especificar el tipo de escaneo con la opción `--type`:
+- `quick`: A quick scan of the most common ports.
+- `full`: A full scan of all TCP ports.
+- `stealth`: A stealthy scan to avoid detection.
 
-- `quick`: Un escaneo rápido de los puertos más comunes.
-- `full`: Un escaneo completo de todos los puertos TCP.
-- `stealth`: Un escaneo sigiloso para evitar la detección.
-
-**Ejemplo de escaneo rápido:**
+**Example of a quick scan:**
 
 ```bash
 python3 main.py scan 192.168.1.10 --type quick
 ```
 
-### Guardar los Resultados
+### Save Scan Results
 
-Guarda los resultados del escaneo en un fichero JSON para su posterior análisis o para usarlos en la fase de explotación.
+Save the scan results in a JSON file for later analysis or to use them in the exploitation phase.
 
 ```bash
 python3 main.py scan 192.168.1.10 --type quick -o scan_results.json
